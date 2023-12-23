@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom'
 import { SearchForm, Input, Button } from './Form.styled';
 
 const Form = ({ searchMovies }) => {
@@ -13,8 +13,9 @@ const Form = ({ searchMovies }) => {
 
     const handleSubmit = event => {
         event.preventDefault();
+        searchParams.set('query', query.toLowerCase());
+        setSearchParams(searchParams);
         searchMovies(query.toLowerCase());
-        setSearchParams({ query: query.toLowerCase() });
     };
 
     return (
@@ -35,4 +36,4 @@ Form.propTypes = {
     searchMovies: PropTypes.func.isRequired,
 };
 
-export default Form;
+export default Form;     

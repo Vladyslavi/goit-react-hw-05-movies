@@ -1,5 +1,5 @@
-import { useEffect, useState, Suspense } from 'react';
-import { useParams, Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
 import { fetchMovieDetails } from 'services/TmbdApi';
 import Loader from 'components/Loader/Loader';
 import {
@@ -15,7 +15,6 @@ const MovieDetails = () => {
     const [movieInfo, setMovieInfo] = useState(null);
     const [loading, setLoading] = useState(false);
     const location = useLocation();
-    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchMovieDetailsFilms = () => {
@@ -37,7 +36,7 @@ const MovieDetails = () => {
     }, [movieId]);
 
     if (!movieInfo) {
-        return null;
+        return;
     }
 
     const {
@@ -96,12 +95,10 @@ const MovieDetails = () => {
                     </li>
                 </ListInfo>
                 <hr />
-                <Suspense fallback={<Loader />}>
-                    <Outlet />
-                </Suspense>
+                <Outlet />
             </div>
         </>
     );
 };
 
-export default MovieDetails;
+export default MovieDetails;                            
