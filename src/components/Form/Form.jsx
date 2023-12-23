@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useSearchParams } from 'react-router-dom';
 import { SearchForm, Input, Button } from './Form.styled';
 
 const Form = ({ searchMovies }) => {
     const [query, setQuery] = useState('');
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const handleInputChange = event => {
         setQuery(event.target.value);
@@ -12,6 +14,7 @@ const Form = ({ searchMovies }) => {
     const handleSubmit = event => {
         event.preventDefault();
         searchMovies(query.toLowerCase());
+        setSearchParams({ query: query.toLowerCase() });
     };
 
     return (

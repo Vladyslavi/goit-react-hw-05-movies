@@ -2,12 +2,14 @@ import { useState } from 'react';
 import Loader from 'components/Loader/Loader';
 import EditorList from 'pages/EditorList/EditorList';
 import Form from 'components/Form/Form';
+import { useLocation } from 'react-router-dom';
 import { fetchSearchByKeyword } from 'services/TmbdApi';
 
 const Movies = () => {
     const [searchFilms, setSearchFilms] = useState([]);
     const [loading, setLoading] = useState(false);
     const [noMoviesText, setNoMoviesText] = useState(false);
+    const location = useLocation();
 
     const searchMovies = queryMovie => {
         setLoading(true);
