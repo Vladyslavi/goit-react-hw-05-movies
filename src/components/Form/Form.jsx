@@ -1,32 +1,26 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useSearchParams, useLocation } from 'react-router-dom';
 import { SearchForm, Input, Button } from './Form.styled';
+import { useSearchParams } from 'react-router-dom';
 
 const Form = ({ searchMovies }) => {
     const [query, setQuery] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();
-    const location = useLocation();
 
     useEffect(() => {
-        const queryParam = new URLSearchParams(location.search).get('query');
-        if (queryParam) {
-            setQuery(queryParam.toLowerCase());
+        const queryFromParams = searchParams.get('query');
+        if (queryFromParams && query !== queryFromParams) {
+            setQuery(queryFromParams);
         }
-    }, [location.search]);
+    }, [searchParams, query, setQuery]);
 
-    const handleInputChange = (event) => {
+    const handleInputChange = event => {
         setQuery(event.target.value);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = event => {
         event.preventDefault();
-        searchParams.set('query', query.toLowerCase());
-        setSearchParams(searchParams);
-
-        const newUrl = `${location.pathname}?query=${query.toLowerCase()}`;
-        window.history.pushState({}, '', newUrl);
-
+        setSearchParams({ query: query.toLowerCase() });
         searchMovies(query.toLowerCase());
     };
 
@@ -48,4 +42,4 @@ Form.propTypes = {
     searchMovies: PropTypes.func.isRequired,
 };
 
-export default Form;     
+export default Form;
