@@ -1,18 +1,9 @@
-import { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { SearchForm, Input, Button } from './Form.styled';
-import { useSearchParams } from 'react-router-dom';
 
 const Form = ({ searchMovies }) => {
     const [query, setQuery] = useState('');
-    const [searchParams, setSearchParams] = useSearchParams();
-
-    useEffect(() => {
-        const queryFromParams = searchParams.get('query');
-        if (queryFromParams && query !== queryFromParams) {
-            setQuery(queryFromParams);
-        }
-    }, [searchParams, query, setQuery]);
 
     const handleInputChange = event => {
         setQuery(event.target.value);
@@ -20,7 +11,6 @@ const Form = ({ searchMovies }) => {
 
     const handleSubmit = event => {
         event.preventDefault();
-        setSearchParams({ query: query.toLowerCase() });
         searchMovies(query.toLowerCase());
     };
 
