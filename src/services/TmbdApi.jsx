@@ -7,11 +7,11 @@ const API_KEY = 'e9462daacd1f784977b9edb52a3fe6ae';
 export const fetchTrending = async () => {
     const response = await axios.get(`trending/movie/day?api_key=${API_KEY}`);
     return response.data.results;
-}
+};
 
 export const fetchSearchByKeyword = async keyword => {
     const response = await axios.get(
-        `search/movie?api_key=${API_KEY}&language=en-US&page=18include_adult=false&query=${keyword}`
+        `search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=false&query=${keyword}`
     );
     return response.data.results;
 };
