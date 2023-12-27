@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { SearchForm, Input, Button } from './Form.styled';
+import { useSearchParams } from 'react-router-dom';
 
 const Form = ({ searchMovies }) => {
-    const [query, setQuery] = useState('');
+    const [searchParams] = useSearchParams();
+    const [query, setQuery] = useState(searchParams.get('query'));
+
 
     const handleInputChange = event => {
         setQuery(event.target.value);

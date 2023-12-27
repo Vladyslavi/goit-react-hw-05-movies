@@ -9,23 +9,23 @@ const Movies = () => {
     const [searchFilms, setSearchFilms] = useState([]);
     const [loading, setLoading] = useState(false);
     const [noMoviesText, setNoMoviesText] = useState(false);
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
         const fetchData = async () => {
             const storedQuery = searchParams.get('query');
-            if (storedQuery) {
-                try {
-                    setLoading(true);
-                    const searchResults = await fetchSearchByKeyword(storedQuery);
-                    setSearchFilms(searchResults);
-                    setNoMoviesText(searchResults.length === 0);
-                } catch (error) {
-                    console.log(error);
-                } finally {
-                    setLoading(false);
-                }
+            if (!storedQuery) return
+            try {
+                setLoading(true);
+                const searchResults = await fetchSearchByKeyword(storedQuery);
+                setSearchFilms(searchResults);
+                setNoMoviesText(searchResults.length === 0);
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setLoading(false);
             }
+
         };
         fetchData();
         return () => {
@@ -33,19 +33,9 @@ const Movies = () => {
     }, [searchParams]);
 
     const searchMovies = queryMovie => {
-        setLoading(true);
+        setSearchParams({ query: queryMovie });
 
-        fetchSearchByKeyword(queryMovie)
-            .then(searchResults => {
-                setSearchFilms(searchResults);
-                setNoMoviesText(searchResults.length === 0);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+
     };
 
     return (
